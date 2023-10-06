@@ -1,0 +1,39 @@
+{% assign visible = site.components | where: "published", true %}
+{% assign entity = include.entity | assert_true: 'No entity given' %}
+
+<article class="card entity-card">
+	<h2>{{ entity | link_with_id: entity.eid }}</h2>
+	<section class="card-main">
+		{% assign exp
+			= 'item["'
+			| append: entity.eid
+			| append: '"]' %}
+
+		<blockquote>
+			{{ entity.content | truncate: 240 | markdownify }}
+		</blockquote>
+
+		{% assign mine = visible | where_exp: "item", exp %}
+
+		{% for component in mine %}
+		{% if forloop.first %}
+		<nav class="entity-card-nav">
+			<i>Entries on: </i>
+			{% endif %}
+
+				{% capture link %}
+					{{ entity | link_to_fragment: component.cid, component.title }}
+				{% endcapture %}
+
+				{% if forloop.last %}
+					{{ link }}
+				{% else %}
+					{{ link | append: ", " }}
+				{% endif %}
+
+			{% if forloop.last %}
+		</nav>
+		{% endif %}
+		{% endfor %}
+	</section>
+</article>

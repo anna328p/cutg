@@ -1,0 +1,44 @@
+:root {
+	--color-outline: lightgrey;
+	--color-shadow: #F8F8F8;
+
+	--color-icon-red: #DD4444;
+	--color-icon-yellow: #FFF844;
+	--color-icon-green: #33CC55;
+}
+
+figure.color-icon-wrapper {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+figcaption.color-icon-caption {
+	display: none;
+}
+
+div.color-icon:hover ~ figcaption.color-icon-caption {
+	display: visible;
+}
+
+div.color-icon {
+	vertical-align: middle;
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: 0.5em;
+	border: 1px solid grey;
+	margin: 0 0.1em 0 0;
+	padding: 0;
+}
+
+div.color-icon-red {
+	background-color: var(--color-icon-red);
+}
+
+div.color-icon-yellow {
+	background-color: var(--color-icon-yellow);
+}
+
+div.color-icon-green {
+	background-color: var(--color-icon-green);
+}

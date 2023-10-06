@@ -1,0 +1,61 @@
+{% assign address = include.address %}
+
+{% assign address_str
+	= address.street | append: ", "
+	| append: address.city | append: ", "
+	| append: address.state | append: " "
+	| append: address.postcode
+%}
+
+{% assign google_uri
+	= "https://www.google.com/maps/embed/v1/place"
+	| append: "?key=" | append: site.maps_api_key
+	| append: "&q=" | append: address_str
+%}
+
+{% assign osm_uri
+	= "https://umap.openstreetmap.fr/en/map/new/"
+	| append: "?scaleControl=true"
+	| append: "&miniMap=false"
+	| append: "&scrollWheelZoom=true"
+	| append: "&zoomControl=true"
+	| append: "&allowEdit=false"
+	| append: "&moreControl=false"
+	| append: "&searchControl=false"
+	| append: "&tilelayersControl=false"
+	| append: "&embedControl=false"
+	| append: "&datalayersControl=false"
+	| append: "&onLoadPanel=undefined"
+	| append: "&captionBar=false"
+	| append: "&captionMenus=false"
+	| append: "&fullscreenControl=true"
+	| append: "&locateControl=false"
+	| append: "&measureControl=false"
+	| append: "&starControl=false"
+	| append: "#17/" | append: address.lat | append: "/" | append: address.lon
+%}
+
+<details class="map-details">
+	<summary>Google</summary>
+	<iframe
+		width="100%"
+		height="480px"
+		style="border:0"
+		loading="lazy"
+		allowfullscreen
+		referrerpolicy="no-referrer-when-downgrade"
+		src="{{ google_uri }}">
+	</iframe>
+</details>
+
+<details class="map-details">
+	<summary>OpenStreetMap</summary>
+	<iframe
+		width="100%"
+		height="480px" src="{{ osm_uri }}"
+		loading="lazy"
+		class="osm"
+		style="border: 0; display:none">
+	</iframe>
+	<div><a href="{{ osm_large_uri }}">View Larger Map</a></div>
+</details>

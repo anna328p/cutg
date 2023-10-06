@@ -1,0 +1,15 @@
+---
+layout: page
+---
+{% for entity in site.entities %}
+	{% capture entity_link %}
+		{{ entity | link_to_fragment_with_id: page.cid, entity.eid }}
+	{% endcapture %}
+
+	{% include component.html
+		component=page
+		entity=entity
+		heading=entity_link
+		optional=true
+	%}
+{% endfor %}

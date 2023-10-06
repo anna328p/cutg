@@ -1,0 +1,12 @@
+{% assign addr = include.entry %}
+<b>Address:</b>
+<address>
+	<p>
+		{{ addr.street }} <br>
+		{% if addr.ext %}
+			{{ addr.ext }} <br>
+		{% endif %}
+		{{ addr.city }}, {{ addr.state }} {{ addr.postcode }}
+	</p>
+</address>
+{% include map.html address=include.entry %}

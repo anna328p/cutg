@@ -1,0 +1,10 @@
+---
+title: Components
+layout: page
+---
+<nav>
+	{% assign visible = site.components | where: "published", true %}
+	{% for comp in visible %}
+	{% include component_overview.html component=comp %}
+	{% endfor %}
+</nav>

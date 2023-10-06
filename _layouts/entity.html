@@ -1,0 +1,61 @@
+---
+layout: page
+---
+<section>
+	<h2>Information</h2>
+
+	{% include component.html
+		cid="phone" entity=page card=false optional=true %}
+
+	{% include component.html
+		cid="address" entity=page card=false optional=true %}
+
+	{{ page.content }}
+</section>
+<section>
+	{% assign children = site.entities | where: "parent", page.eid %}
+
+	{% if page.parent or children %}
+		<h2>Relationships</h2>
+	{% endif %}
+
+	{% if page.parent %}
+	<div>
+		<b>Belongs to:</b>
+		<p>{{ site.entities | find: "eid", page.parent | link }}</p>
+	</div>
+	{% endif %}
+
+	{% for child in children %}
+		{% if forloop.first %}
+		<b>Derived:</b>
+
+		<ul>
+		{% endif %}
+
+			<li>
+				{{ child | link }}
+			</li>
+		
+		{% if forloop.last %}
+		</ul>
+		{% endif %}
+	{% endfor %}
+</section>
+<section>
+	{% assign visible = site.components | where: "published", true %}
+
+	{% for component in visible %}
+		{% if forloop.first %}
+			<h2>Entries</h2>
+		{% endif %}
+
+		{% include component.html
+			cid=component.cid
+			entity=page
+			heading=true
+			link_index=true
+			optional=true
+		%}
+	{% endfor %}
+</section>

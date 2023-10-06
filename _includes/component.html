@@ -1,0 +1,107 @@
+{% unless include.cid or include.for or include.component %}
+	{% raise "Missing required argument: component or CID" %}
+{% endunless %}
+
+{% assign optional
+	= include.optional
+	| default: false %}
+
+{% assign _cid
+	= include.cid
+	| default: nil %}
+
+{% assign _comp
+	= site.components
+	| find: "cid", _cid %}
+
+{% assign component
+	= include.component
+	| default: include.for
+	| default: _comp
+%}
+
+{% assign cid
+	= _cid
+	| default: component.cid %}
+
+{% assign link_index
+	= include.link_index
+	| default: false %}
+
+{% if include.heading == true %}
+	{% capture heading %}
+		{{ component.title | id_wrap: component.cid }}
+	{% endcapture %}
+{% else %}
+	{% assign heading
+		= include.heading
+		| default: false %}
+{% endif %}
+
+{% assign entity
+	= include.entity
+	| assert_true: "Missing required argument: entity" %}
+
+{% assign entry
+	= include.entry
+	| default: component[entity.eid] %}
+
+{% if include.card == true
+		or include.card == nil
+		or include.card == empty %}
+	{% assign card = true %}
+{% elsif include.card == false %}
+	{% assign card = false %}
+{% else %}
+	{% raise "Invalid value for argument: card" %}
+{% endif %}
+	
+{% assign default_partial
+	= cid | prepend: "components/" | append: ".html" %}
+
+{% assign partial
+	= include.partial | default: default_partial %}
+
+{% capture index_link %}
+	{% assign label
+		= "See all entries for " | append: component.title %}
+
+	{{ component | link_to_fragment: entity.eid, label }}
+{% endcapture %}
+
+{% if entry %}
+	{% if card %}
+	<article class="card component-card">
+		{% if heading %}
+		<hgroup>
+			<h2>{{ heading }}</h2>
+			{% endif %}
+			
+			{% if link_index %}
+				<p>{{ index_link }}</p>
+			{% endif %}
+
+			{% if heading %}
+		</hgroup>
+		{% endif %}
+		
+		<section class="card-main">
+			{% endif %} <!-- card -->
+
+			{% include {{ partial }}
+				cid=cid
+				component=component
+				entity=entity
+				entry=entry
+				heading=heading
+			%}
+
+			{% if card %}
+		</section>
+	</article>
+	{% endif %} <!-- card-->
+{% else %}
+	{% unless optional %}
+		{% raise "Entry not found" %}
+	{% endunless %}
+{% endif %}

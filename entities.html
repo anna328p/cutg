@@ -1,0 +1,13 @@
+---
+layout: page
+title: Entities
+---
+{% assign visible = site.components | where: "published", true %}
+
+<nav>
+	{% for entity in site.entities %}
+		{% include entity_card.html
+			entity=entity
+		%}
+	{% endfor %}
+</nav>

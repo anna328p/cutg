@@ -1,0 +1,4 @@
+{% assign component = include.component | assert_true: "No component given" %}
+<article class="card component-overview-card">
+	<h2>{{ component | link }}</h2>
+</article>

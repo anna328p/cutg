@@ -1,0 +1,44 @@
+article.card {
+	border-radius: 0.5rem;
+	border: 1px solid var(--color-outline);
+	margin: 1rem 0;
+	padding: 0.5rem 1rem;
+	box-shadow: 0 0 0.35rem 0.35rem var(--color-shadow);
+}
+
+article.card h2 {
+	margin: 0 0 0.2rem 0;
+}
+
+article.card nav.entity-card-nav {
+	margin-bottom: 0.2rem;
+}
+
+blockquote { margin-bottom: 0.5rem; }
+
+details.map-details:not([open]) {
+	display: inline-block;
+}
+
+details.map-details > summary {
+	display: inline-block;
+	margin: 0 0.5rem 0 0;
+	border-radius: 0.5rem;
+	border: 1px solid var(--color-outline);
+	padding: 0 0.5rem;
+	min-width: 0;
+}
+
+details.map-details > summary::before {
+	content: "▶\a0\a0";
+}
+
+details.map-details[open] > summary {
+	background-color: #F0F0F0;
+}
+
+details.map-details[open] > summary::before {
+	content: "▼\a0\a0";
+}
+
+details.map-details[open] > iframe.osm { display: block !important; }
